@@ -1,25 +1,36 @@
-# NCL sample project folder
+# PWR Data Extract
 
-This git repository contains a shell that should be used as the default structure for new projects
-in the analytical team.  It won't fit all circumstances perfectly, and you can make changes and issue a 
-pull request for new features / changes.
+Python notebook to convert PWR forms into row data that can be processed.
 
-The aim of this template is two-fold: firstly to give a common structure for analytical projects to aid
-reproducibility, secondly to allow for additional security settings as default to prevent accidental upload of files that should not be committed to Git and GitHub.
+## Changelog
 
-__Please update/replace this README file with one relevant to your project__
+### [1.0] - 03/07/2023
 
-## To use this template, please use the following practises:
+- Outputs as csv
+- Works for all data tabs in 2022/23 and 2023/24 PWR forms
 
-* Put any data files in the `data` folder.  This folder is explicitly named in the .gitignore file.  A further layer of security is that all xls, xlsx, csv and pdf files are also explicit ignored in the whole folder as well.  ___If you need to commit one of these files, you must use the `-f` (force) command in `commit`, but you must be sure there is no identifiable data.__
-* Save any documentation in the `docs` file.  This does not mean you should avoid commenting your code, but if you have an operating procedure or supporting documents, add them to this folder.
-* Please save all output: data, formatted tables, graphs etc. in the output folder.  This is also implicitly ignored by git, but you can use the `-f` (force) command in `commit` to add any you wish to publish to github.
+## Standard use
 
+- Add directory containing PWR files to be processed in the same directory as the extract.ipynb notebook. (Standard convention is to store them somewhere in the /data/ directory)
+- Modify the .env file to choose runtime settings (details below)
+- Execute all cells in the extract.ipynb notebook
+- Output is stored in output folder using the same relative path as where the files were stored in the data folder
+- Output will contain 1 files per tab in the PWR files
 
-### Please also consider the following:
-* Linting your code.  This is a formatting process that follows a rule set.  We broadly encourage the tidyverse standard, and recommend the `lintr` package.
-* Comment your code to make sure others can follow.
-* Consider your naming conventions: we recommend `snake case` where spaces are replaced by underscores and no capitals are use. E.g. `outpatient_referral_data`
+## .env Settings
 
+- SOURCEDIR: Specifies data folder. Should remain "./data/" outside of special cases
+- OUTPUTDIR: Specifies output folder. Should remain "./output/" outside of special cases
+- SOURCEPATH: Relative path within the SOURCEDIR and OUTPUTDIR where the target files are located and should be stored respectively
+- TARGETTABS: Binary bit pattern where 1 designates which tabs to process. For example "1011001" translates as process the first, third, fourth, and seventh tab. If the notebook is executed with this, then only those tabs will appear in the output.
+- YEAR: Year value that will appear in the output. Can use whatever format is convienent but standard is yyyy/zz.
+- MONTH: Month. This needs to be the numeric value of the most up to date financial year. For example a value of "2" means the output will contain April and May data only. Using this prevent non-populated data from appearing in the output (As future months exist in the forms but some values are auto-populated with 0's).
 
-This repository is dual licensed under the [Open Government v3]([https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/) & MIT. All code can outputs are subject to Crown Copyright.
+## Output Format
+- fyear: Financial Year, takes the value of the YEAR .env variable
+- org_code: Org code that is listed in the cover sheet of the PWR file
+- occ: Occupation, takes the value of column B in the PWR file which denotes a description for the row of data, typically the occupation.
+- section: Section Name, denotes the title of the table the data appeared in. There are multiple sections in each tab and some have overlapping (or a lack of) subcode id and occ values. The section name is needed to differentiate between rows with no subcode id for some tabs.
+- subcode: Unqiue id code for each row except when it isn't.
+- month: Numeric Month for the financial year (1 is "April", 2 is "May, etc.)
+- count: Value of either the Whole Time Equivalent (WTE) or Headcount (HC)
