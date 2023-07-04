@@ -7,7 +7,7 @@ Python notebook to convert PWR forms into row data that can be processed.
 ### [1.0] - 03/07/2023
 
 - Outputs as csv
-- Works for all data tabs in 2022/23 and 2023/24 PWR forms
+- Works for all data tabs in 2022-23 and 2023-24 PWR forms
 
 ### [1.1] - 03/07/2023
 
@@ -27,7 +27,7 @@ Python notebook to convert PWR forms into row data that can be processed.
 - OUTPUTDIR: Specifies output folder. Should remain "./output/" outside of special cases
 - SOURCEPATH: Relative path within the SOURCEDIR and OUTPUTDIR where the target files are located and should be stored respectively
 - TARGETTABS: Binary bit pattern where 1 designates which tabs to process. For example "1011001" translates as process the first, third, fourth, and seventh tab. If the notebook is executed with this, then only those tabs will appear in the output.
-- YEAR: Year value that will appear in the output. Can use whatever format is convienent but standard is yyyy/zz.
+- YEAR: Year value that will appear in the output. Can use whatever format is convienent but standard is yyyy-zz.
 - MONTH: Month. This needs to be the numeric value of the most up to date financial year. For example a value of "2" means the output will contain April and May data only. Using this prevent non-populated data from appearing in the output (As future months exist in the forms but some values are auto-populated with 0's).
 
 ## Output Format
