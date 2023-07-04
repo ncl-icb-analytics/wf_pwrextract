@@ -13,6 +13,10 @@ Python notebook to convert PWR forms into row data that can be processed.
 
 - Added unit column to the output that specifes whether a row value is WTE, HC, or other.
 
+### [1.2] - 04/07/2023
+
+- Added upload.ipynb notebook to upload the output of the extract.ipynb notebook to sql
+
 ## Standard use
 
 - Add directory containing PWR files to be processed in the same directory as the extract.ipynb notebook. (Standard convention is to store them somewhere in the /data/ directory)
