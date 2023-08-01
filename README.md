@@ -43,3 +43,6 @@ Python notebook to convert PWR forms into row data that can be processed.
 - month: Numeric Month for the financial year (1 is "April", 2 is "May, etc.)
 - count: Value of either the Whole Time Equivalent (WTE) or Headcount (HC)
 - unit: Specifies if the count for this row is WTE, HC, or other.
+
+## Licenses
+This repository is dual licensed under the [Open Government v3](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/) & MIT. All code can outputs are subject to Crown Copyright.
