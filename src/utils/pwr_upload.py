@@ -7,6 +7,7 @@ import ncl_sqlsnippets as snips
 
 #Import env
 from os import getenv
+from sqlalchemy import create_engine, MetaData, text, insert
 from dotenv import load_dotenv
 
 #Import env
@@ -31,6 +32,18 @@ def derrive_years(df):
     years_arr = ["'" + value + "'" for value in years_arr]
     return years_arr
 
+#Establish a connection to the database
+def db_connect(server_address, database, 
+               server_type="mssql", driver="SQL+Server"):
+    
+    #Create Connection String
+    conn_str = (f"{server_type}://{server_address}/{database}"
+                f"?trusted_connection=yes&driver={driver}")
+    
+    #Create SQL Alchemy Engine object
+    engine = create_engine(conn_str, use_setinputsizes=False)
+    return engine
+
 #Construct delete query to remove old data 
 #(Maybe in future replace with UPDATE statement but this is easier for now)
 def build_delete_query(years, sql_table):
@@ -52,20 +65,23 @@ def delete_old_pwr(engine, df, sql_table):
 table_prefix = "wf_pwr_"
 
 #Execute the pipeline for each tab
+print("Upload starting...")
 for tab in TARGETTABS:
     #Get tab name
     tab_name = tab.split(".")[1].lower()
+    print(f"Uploading {tab_name} data")
 
     #Load data
     df_data = pd.read_csv(f"{OUTPUTDIR}{UPLOADPATH}{tab_name}.csv")
     #Derrive destination table name
     sql_table = table_prefix + tab_name
 
-    #Connect to db
-    conn_str = snips.get_connection_string(SQL_ADDRESS, SQL_DATABASE)
+    #Set up Database Connection
+    server_address = SQL_ADDRESS
+    sql_database = SQL_DATABASE
 
-    #Create connection
-    engine = snips.connect_to_sql(conn_str=conn_str)
+    #Connect to the database
+    engine = db_connect(server_address, sql_database)
 
     #Check if table exists
 

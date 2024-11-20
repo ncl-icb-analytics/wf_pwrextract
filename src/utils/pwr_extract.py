@@ -148,7 +148,10 @@ idc = return_idc(MONTH)
 cols = ["num", "occ", "subcode", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
 
 #For each tab
+print("Extract starting...")
+
 for tab in TARGETTABS:
+    print(f"Extarcting {tab.split(".")[1]} data")
 
     #Define main collate dataframe for pwr data
     output_columns = ["fyear", "org_code", "occ", "section", "subcode", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "unit"]
