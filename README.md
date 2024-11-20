@@ -17,22 +17,34 @@ Python notebook to convert PWR forms into row data that can be processed.
 
 - Added upload.ipynb notebook to upload the output of the extract.ipynb notebook to sql
 
-## Standard use
+### [2.0] - 04/07/2023
 
-- Add directory containing PWR files to be processed in the same directory as the extract.ipynb notebook. (Standard convention is to store them somewhere in the /data/ directory)
-- Modify the .env file to choose runtime settings (details below)
-- Execute all cells in the extract.ipynb notebook
-- Output is stored in output folder using the same relative path as where the files were stored in the data folder
-- Output will contain 1 files per tab in the PWR files
+- Moved the code from notebooks to python scripts
+- Reduced functionality to only process core tabs
+- Combined extract and upload code into a single executable
+- Added First Time Installation instructions to the SOP
+
+## First Time Installation
+
+Follow the NCL scripting onboarding document for guidance on installing python, and setting up a virtual environment.
+The onboarding document can be found [here]([https://nhs-my.sharepoint.com/:w:/r/personal/emily_baldwin20_nhs_net/Documents/Documents/Infrastructure/Skills%20Development/Onboarding%20resources/Scripting_Onboarding.docx?d=w7ff7aa3bbbea4dab90a85f1dd5e468ee&csf=1&web=1&e=BPdIKw]).
+
+Copy the .env into the WF_PWREXTRACT folder. The .env file can be found at: 
+`N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Code Resources\wf_pwr`
+
+## Standard use
+Details on sourcing the PWR data is written seperate to this file. Instructions can be found at: `N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Code Resources\wf_pwr`
+
+- Create a new folder in the data directory for the new month's submissions. The full path should be /data/YYYY-ZZ/Mn where YYYY-ZZ is the financial year (i.e. 2024-25) and Mn is the financial month number (i.e. M7 for Month 7 or October).
+- Modify the .env file specify the year and month of data to process.
+- Execute the src/pwr.py script (provided the virtual environment is set up as specified in the First Time Installation section).
+- The code will output a processed version of the data in the output folder but will also upload the new data to the sandpit to the tables specified in the config.toml file.
 
 ## .env Settings
 
-- SOURCEDIR: Specifies data folder. Should remain "./data/" outside of special cases
-- OUTPUTDIR: Specifies output folder. Should remain "./output/" outside of special cases
-- SOURCEPATH: Relative path within the SOURCEDIR and OUTPUTDIR where the target files are located and should be stored respectively
-- TARGETTABS: Binary bit pattern where 1 designates which tabs to process. For example "1011001" translates as process the first, third, fourth, and seventh tab. If the notebook is executed with this, then only those tabs will appear in the output.
-- YEAR: Year value that will appear in the output. Can use whatever format is convienent but standard is yyyy-zz.
-- MONTH: Month. This needs to be the numeric value of the most up to date financial year. For example a value of "2" means the output will contain April and May data only. Using this prevent non-populated data from appearing in the output (As future months exist in the forms but some values are auto-populated with 0's).
+- YEAR: Financial Year (formatted in the form YYYY-ZZ such as 2024-25).
+- MONTH: Financial Month (April -> 1, May -> 2, etc).
+- SQL_ADDRESS: Server address, stored here to avoid being visable in the repo.
 
 ## Output Format
 - fyear: Financial Year, takes the value of the YEAR .env variable
