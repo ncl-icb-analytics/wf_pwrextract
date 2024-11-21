@@ -26,8 +26,8 @@ Python notebook to convert PWR forms into row data that can be processed.
 
 ## First Time Installation
 
-Follow the NCL scripting onboarding document for guidance on installing python, and setting up a virtual environment.
-The onboarding document can be found [here]([https://nhs-my.sharepoint.com/:w:/r/personal/emily_baldwin20_nhs_net/Documents/Documents/Infrastructure/Skills%20Development/Onboarding%20resources/Scripting_Onboarding.docx?d=w7ff7aa3bbbea4dab90a85f1dd5e468ee&csf=1&web=1&e=BPdIKw]).
+Follow the NCL scripting onboarding document for guidance on installing python (Section 7), and setting up the code (Section 4.1).
+The onboarding document can be found [here](https://nhs-my.sharepoint.com/:w:/r/personal/emily_baldwin20_nhs_net/Documents/Documents/Infrastructure/Skills%20Development/Onboarding%20resources/Scripting_Onboarding.docx?d=w7ff7aa3bbbea4dab90a85f1dd5e468ee&csf=1&web=1&e=BPdIKw).
 
 Copy the .env into the WF_PWREXTRACT folder. The .env file can be found at: 
 `N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Code Resources\wf_pwr`
