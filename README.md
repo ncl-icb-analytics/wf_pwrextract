@@ -17,7 +17,7 @@ Python notebook to convert PWR forms into row data that can be processed.
 
 - Added upload.ipynb notebook to upload the output of the extract.ipynb notebook to sql
 
-### [2.0] - 04/07/2023
+### [2.0] - 20/11/2024
 
 - Moved the code from notebooks to python scripts
 - Reduced functionality to only process core tabs
