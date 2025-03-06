@@ -22,7 +22,7 @@ TARGETTABS = config["form"]["target_tabs"]
 
 SQL_DATABASE = config["database"]["sql_database"]
 SQL_SCHEMA = config["database"]["sql_schema"]
-SQL_ADDRESS = getenv("SQL_ADDRESS")
+SQL_DSN = config["database"]["sql_dsn"]
 
 #Get years in data file
 def derrive_years(df):
@@ -33,15 +33,17 @@ def derrive_years(df):
     return years_arr
 
 #Establish a connection to the database
-def db_connect(server_address, database, 
-               server_type="mssql", driver="SQL+Server"):
+def db_connect(dsn, database):
     
     #Create Connection String
-    conn_str = (f"{server_type}://{server_address}/{database}"
-                f"?trusted_connection=yes&driver={driver}")
+    conn_str = (f"mssql+pyodbc:///"
+                f"?odbc_connect=DSN={dsn};"
+                f"DATABASE={database};"
+                f"Trusted_Connection=yes;")
     
     #Create SQL Alchemy Engine object
     engine = create_engine(conn_str, use_setinputsizes=False)
+
     return engine
 
 #Construct delete query to remove old data 
@@ -58,8 +60,11 @@ def delete_old_pwr(engine, df, sql_table):
 
     delete_query = build_delete_query(years, sql_table)
 
-    snips.execute_query(engine, delete_query)
+    with engine.connect() as con:
 
+        #Delete existing data from the destination
+        con.execute(text(delete_query))
+        con.commit()
 
 #Table needs to replace uploadtab whitespace in the table name
 table_prefix = "wf_pwr_"
@@ -77,17 +82,29 @@ for tab in TARGETTABS:
     sql_table = table_prefix + tab_name
 
     #Set up Database Connection
-    server_address = SQL_ADDRESS
+    dsn = SQL_DSN
     sql_database = SQL_DATABASE
+    sql_schema = SQL_SCHEMA
 
     #Connect to the database
-    engine = db_connect(server_address, sql_database)
+    engine = db_connect(dsn, sql_database)
 
     #Check if table exists
 
-    if snips.table_exists(engine, sql_table, SQL_SCHEMA):
-        #If it exists delete old data
+    metadata = MetaData(schema=sql_schema)
+    metadata.reflect(bind=engine)
+    try:
+        sqlalc_table = metadata.tables[sql_schema + '.' + sql_table]
         delete_old_pwr(engine, df_data, sql_table)
 
-    #Upload the data
-    snips.upload_to_sql(df_data, engine, sql_table, SQL_SCHEMA, replace=False)
+    except:
+        pass
+
+    with engine.connect() as con:
+        df_data.to_sql(
+            name=sql_table, 
+            con=con, 
+            schema=sql_schema, 
+            if_exists="append",
+            index=False
+        )
