@@ -24,19 +24,24 @@ Python notebook to convert PWR forms into row data that can be processed.
 - Combined extract and upload code into a single executable
 - Added First Time Installation instructions to the SOP
 
+### [2.1] - 06/03/2025
+
+- Adjusted the database connection to use DSN to establish the connection.
+- Adjusted the code and toml to work from a local directory and pull data from the shared drive.
+
 ## First Time Installation
 
 Follow the NCL scripting onboarding document for guidance on installing python (Section 7), and setting up the code (Section 4.1).
-The onboarding document can be found [here](https://nhs-my.sharepoint.com/:w:/r/personal/emily_baldwin20_nhs_net/Documents/Documents/Infrastructure/Skills%20Development/Onboarding%20resources/Scripting_Onboarding.docx?d=w7ff7aa3bbbea4dab90a85f1dd5e468ee&csf=1&web=1&e=BPdIKw).
+The onboarding document can be found [here](https://nhs.sharepoint.com/:f:/r/sites/msteams_3c6e53/Shared%20Documents/Data%20Science?csf=1&web=1&e=ArWnMM).
 
 Copy the .env into the WF_PWREXTRACT folder. The .env file can be found at: 
-`N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Code Resources\wf_pwr`
+`N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Datasets\Provider Workforce Returns`
 
 ## Standard use
-Details on sourcing the PWR data is written seperate to this file. Instructions can be found at: `N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Code Resources\wf_pwr`
+Details on sourcing the PWR data is written seperate to this file. Instructions can be found at: `N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Datasets\Provider Workforce Returns`
 
-- Create a new folder in the data directory for the new month's submissions. The full path should be /data/YYYY-ZZ/Mn where YYYY-ZZ is the financial year (i.e. 2024-25) and Mn is the financial month number (i.e. M7 for Month 7 or October).
-- Modify the .env file specify the year and month of data to process.
+- Create a new folder in the data directory (found here: `N:\Performance&Transformation\Performance\NELCSUNCLMTFS\_DATA\UEC and Productivity Team\Workforce\Datasets\Provider Workforce Returns`) for the new month's submissions. The full path should be /data/YYYY-ZZ/Mn where YYYY-ZZ is the financial year (i.e. 2024-25) and Mn is the financial month number (i.e. M1 for Month 1 or April).
+- Modify the .env file in your project directory specify the year and month of data to process.
 - Execute the src/pwr.py script (provided the virtual environment is set up as specified in the First Time Installation section).
 - The code will output a processed version of the data in the output folder but will also upload the new data to the sandpit to the tables specified in the config.toml file.
 
@@ -44,7 +49,6 @@ Details on sourcing the PWR data is written seperate to this file. Instructions 
 
 - YEAR: Financial Year (formatted in the form YYYY-ZZ such as 2024-25).
 - MONTH: Financial Month (April -> 1, May -> 2, etc).
-- SQL_ADDRESS: Server address, stored here to avoid being visable in the repo.
 
 ## Output Format
 - fyear: Financial Year, takes the value of the YEAR .env variable
