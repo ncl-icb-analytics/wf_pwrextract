@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 config = toml.load("./config.toml")
 
-OUTPUTDIR = "./" + config["struct"]["output_dir"] + "/"
+OUTPUTDIR = config["struct"]["output_dir"] + "/"
 UPLOADPATH = getenv("YEAR") + "/M" + getenv("MONTH") + "/"
 
 TARGETTABS = config["form"]["target_tabs"]
