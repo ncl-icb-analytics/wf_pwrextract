@@ -1,6 +1,7 @@
 title = "WF PWR EXTRACT"
 
 [database]
+sql_dsn = "SANDPIT"
 sql_database = "Data_Lab_NCL_Dev"
 sql_schema = "JakeK"
 
@@ -10,8 +11,8 @@ sql_table_kpi = "wf_pwr_kpi"
 sql_cooloff = 60
 
 ["struct"]
-data_dir = "data"
-output_dir = "output"
+data_dir = "N:\\Performance&Transformation\\Performance\\NELCSUNCLMTFS\\_DATA\\UEC and Productivity Team\\Workforce\\Datasets\\Provider Workforce Returns\\data"
+output_dir = "N:\\Performance&Transformation\\Performance\\NELCSUNCLMTFS\\_DATA\\UEC and Productivity Team\\Workforce\\Datasets\\Provider Workforce Returns\\processed_pwr_files"
 
 ["form"]
 target_tabs = ["1.WTE", "2.KPI"]

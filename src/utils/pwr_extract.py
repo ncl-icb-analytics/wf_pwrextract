@@ -11,8 +11,8 @@ load_dotenv(override=True)
 #Load toml settings from config
 config = toml.load("./config.toml")
 
-SOURCEDIR = "./" + config["struct"]["data_dir"] + "/"
-OUTPUTDIR = "./" + config["struct"]["output_dir"] + "/"
+SOURCEDIR = config["struct"]["data_dir"] + "/"
+OUTPUTDIR = config["struct"]["output_dir"] + "/"
 SOURCEPATH = getenv("YEAR") + "/M" + getenv("MONTH") + "/"
 
 TARGETTABS = config["form"]["target_tabs"]
