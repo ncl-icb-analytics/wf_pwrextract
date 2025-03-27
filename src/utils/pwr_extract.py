@@ -171,6 +171,9 @@ for tab in TARGETTABS:
         #Trim extra columns
         df_pwr = trim_noise(df_pwr, idc, cols[:MONTH+3])
 
+        #Filter out "HIDE"
+        df_pwr["num"] = df_pwr["num"].replace("HIDE", None)
+
         #For each section
         for i in range(return_sections(df_pwr)):
 
