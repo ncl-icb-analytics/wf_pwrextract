@@ -78,6 +78,9 @@ for tab in TARGETTABS:
 
     #Load data
     df_data = pd.read_csv(f"{OUTPUTDIR}{UPLOADPATH}{tab_name}.csv")
+    # Ensure 'count' column is float for SQL upload
+    if 'count' in df_data.columns:
+        df_data['count'] = pd.to_numeric(df_data['count'], errors='coerce')
     #Derrive destination table name
     sql_table = table_prefix + tab_name
 
